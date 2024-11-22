@@ -1,0 +1,119 @@
+https://bakadesuyo.com/2014/08/how-to-stop-being-lazy/
+
+1）select name of identifier:
+"camelNotation" (first letter of each word is capitalized with the exception of the first word)
+
+2）
+Array 声明array时size如果不够大，输出时会有runtime error
+
+3）头文件xxx.h保护:
+#ifndef _XXX_H_
+#define _XXX_H_(保护定义的名称不一定与头文件名称一致）
+...code here...
+#endif
+3.1）I/O缓冲区????PROJECT实例？？？？？？
+I/O Buffer
+3.2）
+键盘输入 -> [输入缓冲区] -> 程序读取
+
+// 如果缓冲区不为空：
+[a][a][\n] -> 非法输入，程序会继续处理这些内容
+              不会等待新的键盘输入
+
+// 只有当缓冲区为空时：
+[] -> 程序才会等待新的键盘输入
+3.3）
+getchar()
+它是 C 语言的标准输入函数
+每次调用时只读取一个字符
+返回读取到的字符的 ASCII 值
+如果读到文件末尾，返回 EOF（通常是 -1）
+while (getchar() != '\n');  // 清空缓冲区
+
+4）
+harry.grade：表示 grade 数组的首地址。
+harry.grade[0]：表示 grade 数组第一个元素的值。
+
+5）
+(void*) 是一个类型转换，允许将其他类型的指针转换为通用的 void* 指针
+
+6）
+\n: 转义了字符 n，使其变成换行符
+\\n: 转义了第二个反斜杠，结果只显示一个反斜杠+字符n
+
+7）*p=。。。将值写入地址p
+   。。。=*p 读取地址p中的值
+
+--------------------------TEXT FILES-----------------------
+			Secondary Storage
+	-Retains data when the computer is off.
+	-Stores information as files for later access.
+
+1)		File
+-Definition: A named area in secondary storage.
+-Non-contiguous: Files may consist of fragments in non-contiguous locations.
+-Unit: Byte is the basic storage unit of a file.
+-EOF: End-Of-File marker, typically -1.
+1.1)	Key Operations
+-Connect program to a file.
+Store information in a file.
+Retrieve information from a file.
+
+2)		File Format(text/binary)
+Text: Readable and editable data.
+#Portable across platforms with the same character set.
+#Character Set: IEC/ISO 646-1083 Invariant Code Set.
+  - Alphabetic Characters: A-Z, a-z (52 total).
+  - Digits: 0-9 (10 total).
+  - Space and Control Characters: \0, \l, \n, \t, \v, \f.
+  - Graphic Characters: e.g., ! # % ^ & * (29 total).
+	*Excludes $ and ` due to inconsistent encoding.
+2.1)	Sequential Access
+Access files sequentially, byte by byte.
+Process files as a byte stream until EOF.
+
+3)		Connection
+-C programs connect to files through FILE type objects.
+-FILE type objects store file info and track the next access position.
+3.1)	File Pointer
+-Syntax: FILE *identifier;
+-Handle: The pointer is a handle to the FILE object.
+*Access files by storing the FILE object address in a pointer.
+3.2)	FILE Structure Type	//Declared in: <stdio.h>
+-Example:
+#include <stdio.h>
+FILE *fp = NULL;	//NULL is defined in <stdio.h>.
+*Initialize fp to NULL to avoid premature dereferencing.
+*Accessing data at fp before opening causes segmentation fault.
+
+4)	"r": Read from the file.
+	"w": Write to the file; truncates if exists, creates if not.
+	"a": Append to the file; creates if not exists.
+		fprintf() - 格式化写入文件
+	fprintf(fp, "sku = %d price = %.2f\n", sku, price);
+	解释: 将格式化的整数和浮点数写入文件。
+		fputc() - 写入单个字符到文件
+	fputc('A', fp);
+	解释: 将字符 'A' 写入文件。
+		 fscanf() - 从文件中格式化读取
+	fscanf(fp, "%d %lf", &sku, &price);
+	解释: 从文件读取整数和浮点数。
+		fgetc() - 从文件中读取单个字符
+	int ch = fgetc(fp);
+	解释: 从文件读取一个字符。
+
+	// Rewind: Reset file pointer to the beginning
+		rewind(fp);
+	// Check End of File (EOF): Returns 1 if EOF reached, 0 otherwise
+		int eof = feof(fp);
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,558 @@
+---------------------------WEEK2----------------------------------
+
+Linux command:
+-CTRL+D: log out matrix from putty
+-ways to current home dictionary————
+Linux: a)cd   b)cd ~  c)cd $home
+-pwd(print working dir)
+-ls ~/Documents/ (from anywhere show the contents in Documents)
+-cd /folder1 (change dir to the relative path)
+-ls . (list content for current dir)
+-clear(clean in linux)-cls in windows
+
+
+
+-path specifies: \ backward in windows
+                 / forward in Linux
+                        Linux            windows
+list current dir          ls               dir
+list content of..       ls /bin          dir d:\
+-In Linux, use rm -r to delete non-empty folders, rmdir to delete empty folders(windows same), and rm to delete files. 
+ touch(create file)/rm(remove file)
+
+-In Windows, use rmdir /s to delete non-empty folders, and del to delete files.
+
+
+-for both Linux and windows
+  a). cd+ address: change our current dir
+    eg:cd c:\ (back to disk c in windows)
+  b). cd..(dir one step back)
+      cd .(current dir)
+  c). mkdir foldername (make a dir in current dir)
+
+
+****************
+-nano sample.txt(modify empty text file called "sample") linux
+-ls(Linux)/dir(windows) (show the list of file)
+-"ls -la"(show with details. hidden include)
+
+
+-cp 1.text 2.text(copy 1 into 2.text) Linux
+ ?????cp -r(递归复制）复制文件夹及其内容
+************
+Use cd and ls commands to demonstrate the absolute/relative and relative to home pathnames.
+Edit a file :
+nano linux.txt
+vi linux.txt, vim linux.txt
+gedit linux.txt
+
+Remove a file 
+rm linux.txt
+
+-------------------------------WEEK3---------------------------------------
+
+1). cat w1.txt w2.txt > combined.txt // combine 2txt into 1 and save ---------no windows?
+2). cat w1.txt // display w1.txt
+
+3). less 部分读取文件（按需加载）来显示内容，不会一次性加载整个文件。
+                  用户可以自由上下滚动查看文件，使用更加灵活。
+                  适合查看大文件，并且不会因为文件太大而消耗过多内存。
+    more 从文件头开始按顺序读取并显示。
+                 用户只能向下翻页，不能回滚。
+                 适合快速查看文件前面的内容，但不太灵活
+    head 默认前10行 
+                 head -n 5 example.txt 目标文本前5行（-c 5byte，char）
+    tail 默认最后10行 
+                 tail -n 5 example.txt 最后5行（-c 5个byte）
+    
+*4). binery file extension: .dat .bin
+
+5). file exp.txt --------learn ASCII Table??????-------
+
+
+6). cut -d',' -f1,5 uniweek5.txt > eg.txt
+       截取（不修改）源文件的第1，5列（以','为分隔) 并保存到eg.txt
+       ((-d)elimiter)分隔符
+       ((-f)ields区域
+7). sort /-n/-r/-u/-f eg.txt
+         无指令默认按字母/-数值/-降序/-去重/-忽略大小写((-f)old case)排序eg.txt
+8). uniq /-d/-c eg.txt
+         无指令默认顺序剔除连续重复行并显示剩余
+                  -d 按顺序输出连续重复行内容一次
+                  -c 按顺序显示首次出现的行，并计数
+        sort eg.txt | uniq 排序并去重显示
+9).  find [路径] [选项] [表达式]
+     find /home -name "*.txt" 
+     在 /home 目录包括子目录下查找所有扩展名为 .txt 的文件。
+10). grep [选项] '字符串' 文件名
+     ***grep -i "hello" example.txt
+        在 example.txt 文件中查找忽略大小写((-i)gnore case)的 "hello" 字符串 
+                终端显示包含字符串的每一行
+     ***-n 显示匹配行号
+     ***grep -r "error" /path/to/directory
+        查找 并输出/path/to/directory 目录及其所有子目录((-r)ecursive)中包含"error" 的行
+11). diff (find difference) diff -u eg1.txt eg2.txt 统一格式（-u）
+12). tr [选项] '原字符集' '目标字符集'
+         -d：删除指定的字符。
+         -s：压缩重复的字符。
+     cat eg.txt | tr 'a-z' 'A-Z'
+          将源文件中的小写字母转换((tr)anslate)为大写字母并显示
+13). file globbing   */?/[]
+14). stat -c%s file.txt  ???????????????
+
+Linux  Windows
+ mv     move
+ cp     copy
+ rm     del
+diff    fc
+
+------------------------------------WEEK4------------------------------
+
+1）hard link: same inode(same file)
+ln
+ln -s (symbolic) link：指向原始文件的指针，inode中保存目标文件的路径
+
+ls -l / -i(check node)/ -ld(详细汇总信息，不列出具体文件或子目录）
+*find . -inum 232inode463
+
+2) metadata: data for data： inode
+
+3) chmod u+r,go=rx file.txt
+       (u)user/(g)group/(o)others/(a)all
+       (+)add/(-)remove/(=)set
+       (r)ead/(w)rite/e(x)ecute
+   ***octal method***
+   r=4, w=2, x=1 / user-group-others
+   chmod 754 file.txt
+       (user:rwx-group:rx-others:r)
+     (binary:111      101       100)      
+   
+****************?????????
+   setuid：u+s （文件执行者身份变为owner）
+   setgid: g+s（chmod dir及其子目录与文件，所属组向目标dir保持一致）
+****************??????
+   sticky bit: +t (确保owner才可以edit/del文件）
+   chmod +t dir1
+
+4) umask -default permission: dir(777) file(666)
+                              rwxrwxrwx  rw-rw-rw      
+   Example: umask 077 means:
+           -Directory: 777- 077 = 700
+           -700 = rwx------
+       ??!!!!-File: 666 - 077 = 600
+           -600 = rw-------
+umask设置会修改默认权限，作用于后续你创建的所有文件和目录, 直至关闭终端或者手动更改
+
+5) redirecting > (save to...replace existing file
+   >> file.txt (append to already existing file
+   piping |
+
+-------------------------------WEEK5----------------------------------
+Resource and Process management
+Checking available resources
+Monitoring Processes
+Process Control
+
+1) ps (只显示当前终端进程）
+pid: processing id 
+TTY: terminal type
+pts: persudo terminal slave??? (like putty
+ps -u $(whoami)  ==   ps -u username （包含用户关联的守护进程daemon processes）
+ps -e :snap shot of all process rightnow(not just my own terminal)
+1.1) ps -l（和-u类似，都只显示当前节点，即user的进程）
+flag/PRI/NI/ADDR/SZ/RSS/WCHAN/STAT(R/S/T)
+***wchan（wait channel）: 它指的是进程当前等待的内核函数或事件。
+***用户操纵软件（/bin等），软件通过内核函数（kernel function)调用硬件
+     ps -p +进程号 （只显示该进程简单信息）
+
+2）pstree
+
+4）& （start the process in background)
+   ctrl+Z (stop process and send to background)
+   Ctrl+C 终止进程
+4.1）
+   bg：恢复为后台运行  fg: 恢复为前台运行 
+      +作业号(jobs)
+   eg: fg %1
+4.2)command &> file
+解释：&> 同时重定向标准输出和标准错误到同一个文件。
+示例：ls &> output.txt，标准输出和标准错误都将写入 output.txt。
+    command > file 2> file
+
+解释：> 用于重定向标准输出到文件，2> 用于重定向标准错误到同一个文件。
+示例：ls > output.txt 2> error.txt，ls 的正常输出会写入output.txt，错误信息则写入 error.txt。
+
+5) sudo apt update
+   sudo apt install firefox
+***6) kill PID (or %job)
+        -SIGTERM: kill -15
+        -SIGKILL: kill -9 强制终止
+        -SIGINT (2)
+中文：中断信号
+用途：相当于按下 Ctrl+C，用于中断一个正在运行的进程。
+        -SIGSTOP (19)
+中文：停止进程
+用途：立即停止进程，且无法被捕捉或忽略。需要用 SIGCONT 继续运行。
+        -SIGTSTP (20)
+中文：终端停止信号
+用途：用户在终端上按下 Ctrl+Z 时发出，暂停进程，允许稍后继续运行。
+                 -SIGCONT (18)
+中文：继续执行
+用途：恢复被 SIGSTOP 或 SIGTSTP 暂停的进程继续运行。
+
+7）powershell
+   get-process 类似于 top
+   stop-process -name notepad++
+
+--------------------------------WEEK6----------------------------------
+2) top
+VIRT(virtual memory) 程序可使用总内存 = 正使用的物理ram + 未使用内存ram+ swap
+RES(resident set size) 实际使用物理ram = NPM/PM
+SHR (shared memory)
+shift+Press 'P' to sort processes by CPU usage, 'M' to sort by memory usage, and 'N' to sort by PID
+///////////////////////
+3）get-process
+Handles	当前进程打开的句柄数量
+NPM	非页内存（Non-Paged Memory）使用量
+PM	页内存（Paged Memory: 可swap）使用量
+WS	工作集（Working Set：活跃页面，包含pm/npm）
+VM	虚拟内存（Virtual Memory）使用量
+CPU	该进程使用的 CPU 时间
+Id	进程的唯一标识符（Process ID）
+SI            session id?????????????
+ProcessName	进程名称
+///////////////////////
+???????????????????4)debug-process
+
+-------------------------mid test--------------------------------
+1) Directory Path Purpose
+/ Root, top of file system hierarchy
+/bin Common system binaries (commands)
+/home Used to store users’ home directories
+/usr This is call User, where user related programs live
+/usr/bin Common utilities (commands) for users
+/usr/sbin Common utilities for system administration
+/etc System configuration files (eg. passwd)
+/var Dynamic files (log and mail files)
+/tmp , /var/tmp Temporary files for programs
+/dev Device driver files (terminals, printers, etc)
+/opt User installed application programs
+
+NO TEST2) ls socket?
+NO TEST3) DNS? (convert domain into IPaddr)
+          TCP/UDP
+
+4) command &> file
+   command >> file
+
+----------------------------WEEK8 & WEEK9----------------------------------
+
+1） shebang -> #!(kernel可识别的magic number，后面跟着目标解释器的地址）
+eg： #!/usr/bin/pwsh （powershell在Linux上的路径）
+
+important:
+shebang主要用于Linux和macOS，帮助内核选择解释器；而在Windows上，系统依赖文件扩展名来识别和运行脚本：（.ps1 ->powershell .bat->cmd .vbs->Windows_script_Host）,pwsh内#会被当作注释行
+
+//////////////////////////////////////////////////
+
+2) ???*** in power shell:
+ get-childItem | format-list (powershell) == ls -l (Linux)
+     get-Acl "file address" 查看文件访问权限（Access control list)
+???2.1) set-executionPolicy管理脚本权限
+             get-executionPolicy -list 查看所有scope下的执行策略
+eg:
+set-executionPolicy remotesigned -scope currentuser
+***自己下载后自签名，也需要添加自签名证书到我的信任列表才能执行
+???***note:
+如果你为脚本添加了有效的签名，且对方的计算机信任该签名，其他人可以直接运行这个脚本。
+如果你使用自签名证书，接收者需要信任该证书才能执行脚本。
+接收者的 PowerShell 执行策略也会影响他们能否运行脚本。
+
+////////////////////////////////////////////////////
+
+3）			variables
+important:
+Don't put spaces on either side of the equal sign when setting up! (eg:
+3.1)单双引号的区别：
+3.2）scope:
+$global:globleVar="globle variable!"
+$script:scriptVar="script-scoped!"
+$local:Var="im local"
+
+//////////////以上是//////pwsh script////////////////
+
+//////////////以下是//////bash script////////////////
+
+4)			??? quoting
+4.1) Backslash:"\"
+A backslash character outside of quotes or inside double quotes instructs the shell to ignore any special meaning that the following character may have.
+
+/////////////////////////////////////////////////////
+
+5）			environment variables:
+	export Y=123 (设置临时环境变量Y）
+5.1）	Change the shell prompt（PS1):
+	PS1="PROMPT HERE"
+	常规设置：PS1="[\u@\h \W]\$ "
+5.2）	PATH（包含一系列目录的环境变量，输入命令时，系统按PATH内目录顺	序查找并执行命令）
+	PATH="$PATH:."(临时将当前目录加入PATH，每个目录用：隔开。PATH	内不是文件绝对	路径而是文件所在目录路径）
+5.3)	LANG/HOME...
+
+////////////////////////read////////////////////////
+
+6)		read and assign Variable from Stdin: read variable_name
+6.1)	-p (display a prompt when read variable)
+	$ read -p "Please enter a course code: " C
+	  Please enter a course code: OPS102
+	$ echo "The selected course is $C"
+	  The selected course is OPS102
+
+////////////////////////////////////////////////////
+
+7)		command substitution: $(command)
+	excute the cmd inside( ) first and assigned as an value
+7.1)	Arithmetic Expansion 算术扩展: $((算术运算))
+	-$(( )) 用于求值并返回结果（expression with value returned）。
+	-(( )) 用于求值但不返回结果（expression without value returned）
+	-在 (( )) 中可以直接进行算术运算并赋值给变量
+
+
+8)//////////////////Exit Status Codes//////////////////
+	define: When a program runs, it exits with a numeric value,表示执行结果
+  执行一个命令后再 echo $?
+	0: 成功，程序正常完成（Success, program completed successfully）
+	1: 通用错误，通常表示未知的错误（unspecified error）
+	2: 错误的命令使用或参数错误（misuse）
+	127: 命令未找到（Command not found）
+	130: 程序因用户中断（如 Ctrl+C）而终止（terminated by interruption）  
+
+//////////////////////if & test//////////////////////////
+	
+9）	if ls /some/directory 
+	then  #exit code = 0，则if判定为真
+	   echo "Directory exists"
+	else
+	   echo "Directory does not exist"
+	fi
+9.1)	if list1; then
+	list2 # … then run this
+	elif list3; then # Else if this exits with success...
+	list4 # … then do this
+	else
+	list5 # Otherwise do this
+	fi
+9.1.1)	if command; then	#command不用[...]
+9.2)		test命令: 
+ 	if test "$NAME" == "Chris"
+	then
+	SUPERPOWERS="Yes"
+	fi
+9.2.1）		[[ ... ]]  #test 命令的 改进版
+9.2.2)		Filesystem Tests:
+	if [[ -f myfile.txt ]]; then
+    	echo "myfile.txt 是一个普通文件"
+	else
+    	echo "myfile.txt 不是普通文件"
+	fi
+
+	-f filename 	filename is a regular file
+	-d filename 	filename is a directory
+	-l filename	filename is a symbolic link
+	-r filename 	filename is readable
+	-w filename 	filename is writable
+	-x filename 	filename is executable
+	-e filename	if file exist
+	=================
+	$str1" == $str2 	strings match
+	$str1 != $str2 		strings don't match
+	$str1 > $str2 		string1 greater than (sorts before) string2
+	$str1 < $str2 		string1 greater than (sorts before) string2
+	-z $str			check if string empty
+	-n $str			check if not empty
+	=================
+	integer1 -eq integer2 	integers are equal
+	integer1 -ne integer2 	integers are not equal
+	integer1 -gt integer2 	integer1 is greater than integer2
+	integer1 -ge integer2 	integers1 is greater than or equal to integer 2
+	integer1 -lt integer2 	integers is less than integer2
+	integer1 -le integer2 	integer1 is less than or equal to integer2
+	*note: > 和 <用于字符串比较，整数比较须使用专门运算符，如 -gt、-lt 等
+	=================
+	[[ ! -f "$F" ]] # check if $F isn't a regular file
+	[[ $A -eq $B && $C -eq $D ]] # AND: both conditions must be true
+	[[ $X -eq $Y || $X -eq $Z ]] # OR: either condition must be true
+
+////////////////////script parameters//////////////////////
+10)	$0 		#./script name.
+	$1, $2, ... 	#positional arguments, with $1 as the first.
+	$# 		#number of arguments.
+	shift 		#removes the 1st argument, shift others forward.
+	$*		所有参数作为单一字符串(不常用）
+	$@		每个参数作为独立字符串。
+
+***/////////////////////输出重定向///////////////////////////
+- 标准输出 (stdout) 到文件：
+  command > output.txt
+- 标准错误输出 (stderr) 到文件：
+  command 2> error.log
+- 标准输出和标准错误输出到同一个文件：
+  command > output.txt 2>&1
+- 重定向到标准错误流 (stderr)：
+  echo "Error message" >&2
+
+/////////////////////////for loop//////////////////////////////
+11)	# 1. 遍历值的 for 循环 (Iterating over values):
+	for variable in values; do
+    	    # 操作 (Actions on each value)
+	done
+	# 用于处理列表或字符串集合，逐个执行操作。
+	# Used for handling lists or sets of strings, performing actions on each.
+
+	# 2. C风格的 for 循环 (C-style for loop):
+	for (( setup; control; iteration )); do
+    	    # 操作 (Actions on each iteration)
+	done
+	# 用于数值控制和计数，适合执行固定次数的循环。
+	# Used for numeric control and counting, suitable for fixed-iteration loops.
+
+////////////////////////while loop//////////////////////////
+12)	# 1. 基本的 while 循环 (Basic while loop)
+	while condition; do
+    	    # 执行操作 (Perform actions)
+	done
+
+	# 2. 示例：检查登录用户数量 (Example: Check number of logged-in users)
+	while [[ "$(who | wc -l)" -gt 1 ]]; do
+    	  echo "There are other users logged in:"
+    	  who
+    	  sleep 10
+	done
+
+///////////////////////until loop//////////////////////////
+13)	until [[ "$(date +%u)" == "6" ]]; do
+    	  echo "Waiting until Saturday..."
+    	  sleep $((24 * 60 * 60))  # 等待24小时
+	done
+	#condition判定为假时执行循环，与while相反
+
+***???////////////////////////////////////////////////////////
+14)	.bash_profile
+	.bashrc
+
+------------------------------WEEK10---------------------------------
+
+//////////////////////basic calculator/////////////////////////
+1)eg:	random_float=$(echo "scale=2; $RANDOM/32767" | bc)
+1.1)	bc用法
+	# 基本计算 Basic Calculation
+		echo "3 + 5" | bc
+	# 浮点运算，设置精度 Floating-point Arithmetic with Precision
+		echo "scale=2; 5/3" | bc
+	# 读取字符串并计算 Read and Calculate from a String
+		echo "scale=2; $RANDOM/32767" | bc
+	# 传递变量进行计算 Passing Variables for Calculation
+		result=$(echo "scale=2; x=10; y=5; x/y" | bc); echo $result
+	# 交互模式 Interactive Mode
+		bc
+		scale=2; 5/3
+	# 控制精度 Control Precision with `scale`
+		echo "scale=3; 10/3" | bc
+
+2)	Break in loop
+	When break is executed, the loop stops running, and the program moves to the next line of code after the loop.
+
+-------------------------------WEEK11--------------------------------
+		# Shared Libraries: Key Benefits
+- Reduced Memory Consumption
+  * A single copy of the library is shared in memory by multiple programs.
+- Reduced Storage Requirements
+  * Executables do not include library code, saving storage space.
+- Independent Updates
+  * Libraries can be updated independently of executables.
+  * Programs will use the updated library when executed.
+
+		# system software dir in Windows
+- Executables
+  * Common directories for executables:
+    - C:\Program Files
+    - C:\Program Files (x86)
+    - C:\Windows\System
+    - C:\Windows\SysWOW64
+- Libraries
+  * Common directories for libraries:
+    - C:\Program Files
+    - C:\Program Files (x86)
+    - C:\Windows\System
+    - C:\Windows\SysWOW64
+- Header Files
+  * Common directories for header files:
+    - C:\Program Files
+    - C:\Program Files (x86)
+- Executables and Libraries in the Same Directory
+  * Executables and libraries are usually located in the same directory on Windows.
+
+		# system software dir in Linux
+- Executables
+  * Common directories for executables:
+    - /bin
+    - /usr/bin
+    - /sbin
+    - /usr/sbin
+- Shared Libraries
+  * Common directories for shared libraries:
+    - /usr/lib
+    - /usr/lib64
+- Header Files
+  * Common directory for header files:
+    - /usr/include
+- Executables and Libraries in Different Directories
+  * Executables and libraries have their own directories on Linux.
+
+		# API作为管道，内核处理硬件交互
+**API** 是程序与操作系统之间的接口。
+  - 程序通过调用 **API** 请求系统服务。
+  - **API** 将请求传递给 **kernel**。
+**kernel** 处理实际的硬件操作。
+  - **kernel** 管理硬件资源（CPU、内存、硬盘等）。
+  - **kernel** 通过 **drivers** 与硬件交互。
+**driver** 定义：驱动程序（**driver**）是操作系统和硬件之间的中介软件，负责与硬件进行通信，提供标准接口以使操作系统能够管理硬件设备。
+**kernel** 处理硬件交互。
+  - **kernel** 调度硬件操作并返回结果。
+# 流程：
+1. **Program** 调用 **API**。
+2. **API** 将请求传递给 **kernel**。
+3. **kernel** 通过 **drivers** 与硬件交互。
+4. **Hardware** 执行操作并将结果返回给 **kernel**。
+5. **kernel** 通过 **API** 将结果返回给程序。
+
+p23...
+		# sudo apt command overview
+sudo 
+- Stands for "SuperUser Do"
+- Grants temporary admin (root) privileges to execute commands
+apt
+- Advanced Package Tool
+- A package management tool for Debian-based Linux distributions (e.g., Ubuntu)
+
+# Common sudo apt commands
+# 1. sudo apt update
+#    - Updates the local package database with the latest available software.
+#    - Does not install any software, just refreshes available software list.
+
+# 2. sudo apt upgrade
+#    - Upgrades installed packages to the latest version available.
+
+# 3. sudo apt install <package-name>
+#    - Installs the specified software package (e.g., sudo apt install nginx).
+
+# 4. sudo apt remove <package-name>
+#    - Uninstalls the specified software package.
+
+# 5. sudo apt purge <package-name>
+#    - Removes the software package along with its configuration files.
+
+# 6. sudo apt autoremove
+#    - Removes unnecessary dependencies to save system space.
+
+# 7. sudo apt show <package-name>
+#    - Displays detailed information about the software package (e.g., version, description).
