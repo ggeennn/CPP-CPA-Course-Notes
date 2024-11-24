@@ -107,6 +107,52 @@ FILE *fp = NULL;	//NULL is defined in <stdio.h>.
 	// Check End of File (EOF): Returns 1 if EOF reached, 0 otherwise
 		int eof = feof(fp);
 
+---------------------------String Library------------------------------
+
+1).	String Functions
+strlen(): 
+Returns the number of characters in a character string(excluding '\0')
+strcpy(): 
+- Copy 2nd to 1st, Ensure enough space for the destination string, including the null terminator, otherwise strcpy function won't work
+strcmp(): 
+- Compares two strings， Returns:
+    - 0 if identical
+    - Negative if first string is smaller
+    - Positive if first string is larger
+strcat(): 
+- Appends the second string to the first.
+- Ensure sufficient space for the destination string.
+
+2).	scanf with %30[^\n]%*c
+%30[^\n]:	Reads up to 30 characters or stops at (\n), excludes \n from input.
+%*c: 		Reads and discards the next character (usually the newline).
+Purpose: 	Clears the newline character left in the input buffer.
+			
+3).	puts()
+Outputs a string to the console, appending a newline (\n) automatically.
+
+4).	Reversing a String (Code Example)
+int len = strlen(str);
+for (int i = len - 1; i >= 0; i--) {
+    rev[len - 1 - i] = str[i];}
+rev[len] = '\0';
+puts(rev);
+
+5).	Whitespace Handling with %c
+Adding a space before %c skips any leading whitespace (e.g., spaces, tabs, newlines) and waits for non-whitespace input.
+Key Tip: Always use " %c" if %c follows another scanf call.
+
+6).	%n Conversion Specifier
+%n doesn't read characters but stores the number of characters processed so far into the specified variable.
+Useful for tracking how much input has been consumed
+
+7).	`%[ ]` and `%[^ ]` Specifiers
+- `%[ ]`: Reads a sequence of characters that match the ones specified inside the brackets. It stops when it encounters a character not in the set.
+- `%[^ ]`: Reads a sequence of characters **not** in the set. It stops when it encounters a character in the set.
+- **Example**:
+  scanf("%[a-zA-Z]", name);  // Reads alphabetic characters only
+  scanf("%[^,]", value);     // Reads until encountering a comma
+
 
 
 
