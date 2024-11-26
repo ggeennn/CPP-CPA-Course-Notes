@@ -462,7 +462,8 @@ A backslash character outside of quotes or inside double quotes instructs the sh
 	When break is executed, the loop stops running, and the program moves to the next line of code after the loop.
 
 -------------------------------WEEK11--------------------------------
-		# Shared Libraries: Key Benefits
+		
+		# Shared Libraries: Key Benefits #
 - Reduced Memory Consumption
   * A single copy of the library is shared in memory by multiple programs.
 - Reduced Storage Requirements
@@ -470,8 +471,8 @@ A backslash character outside of quotes or inside double quotes instructs the sh
 - Independent Updates
   * Libraries can be updated independently of executables.
   * Programs will use the updated library when executed.
-
-		# system software dir in Windows
+                
+		# system software dir in Windows #
 - Executables
   * Common directories for executables:
     - C:\Program Files
@@ -491,7 +492,7 @@ A backslash character outside of quotes or inside double quotes instructs the sh
 - Executables and Libraries in the Same Directory
   * Executables and libraries are usually located in the same directory on Windows.
 
-		# system software dir in Linux
+		# system software dir in Linux #
 - Executables
   * Common directories for executables:
     - /bin
@@ -508,7 +509,7 @@ A backslash character outside of quotes or inside double quotes instructs the sh
 - Executables and Libraries in Different Directories
   * Executables and libraries have their own directories on Linux.
 
-		# API作为管道，内核处理硬件交互
+		# API作为管道，内核处理硬件交互 #
 **API** 是程序与操作系统之间的接口。
   - 程序通过调用 **API** 请求系统服务。
   - **API** 将请求传递给 **kernel**。
@@ -525,34 +526,45 @@ A backslash character outside of quotes or inside double quotes instructs the sh
 4. **Hardware** 执行操作并将结果返回给 **kernel**。
 5. **kernel** 通过 **API** 将结果返回给程序。
 
-p23...
-		# sudo apt command overview
+		# sudo apt command overview #
 sudo 
 - Stands for "SuperUser Do"
 - Grants temporary admin (root) privileges to execute commands
 apt
 - Advanced Package Tool
 - A package management tool for Debian-based Linux distributions (e.g., Ubuntu)
-
-# Common sudo apt commands
-# 1. sudo apt update
+		# Common sudo apt commands
+# 1. sudo apt update // 更新本地软件包列表（更新软件版本等）
 #    - Updates the local package database with the latest available software.
 #    - Does not install any software, just refreshes available software list.
-
-# 2. sudo apt upgrade
+# 2. sudo apt upgrade //升级已安装软件
 #    - Upgrades installed packages to the latest version available.
-
 # 3. sudo apt install <package-name>
-#    - Installs the specified software package (e.g., sudo apt install nginx).
-
+#    - Installs the specified software package 
 # 4. sudo apt remove <package-name>
 #    - Uninstalls the specified software package.
-
 # 5. sudo apt purge <package-name>
 #    - Removes the software package along with its configuration files.
-
 # 6. sudo apt autoremove
 #    - Removes unnecessary dependencies to save system space.
-
 # 7. sudo apt show <package-name>
 #    - Displays detailed information about the software package (e.g., version, description).
+# 8. apt list --installed
+#    - Lists all packages currently installed on the system.
+
+		# Program to Hardware Interaction
+# 1. Program
+- User-written applications providing functionality and interacting with users.
+# 2. Library Functions
+- Predefined functions used by programs to simplify operations (e.g., I/O, string handling).
+- Call operating system services indirectly through APIs.
+# 3. Operating System (Kernel)
+- Core part of the OS responsible for managing hardware, memory, processes, and resources.
+- Provides APIs that library functions and programs call to interact with hardware.
+# 4. Hardware
+- Physical components (CPU, memory, disks) where tasks are executed.
+- Interacted with through the OS kernel.
+# Summary:
+- Program -> Library Functions -> Operating System -> Hardware.
+
+p27
