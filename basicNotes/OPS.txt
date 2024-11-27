@@ -552,7 +552,7 @@ apt
 # 8. apt list --installed
 #    - Lists all packages currently installed on the system.
 
-		# Program to Hardware Interaction
+		Program to Hardware Interaction
 # 1. Program
 - User-written applications providing functionality and interacting with users.
 # 2. Library Functions
@@ -567,26 +567,22 @@ apt
 # Summary:
 - Program -> Library Functions -> Operating System -> Hardware.
 
-		# IFS 和 read -r 的知识点
-
+		IFS 和 read -r 的知识点
 1. IFS（Internal Field Separator）
    - 描述：IFS是Bash中的一个特殊变量，用于定义分隔符，用于分割输入的数据。默认包含空格、制表符和换行符。
    - 示例：
      IFS=',' read -r name age
-
 2. read 命令
    - 描述：read命令用于从标准输入读取一行数据，并将其拆分为多个变量。
    - `-r` 选项：防止反斜杠（\）被转义。
    - 示例：
      read -r first_name last_name
-
 3. done < 用法
    - 描述：done < 将文件内容传递给 while 循环中的 read 命令，逐行读取文件内容。
    - 示例：
      while IFS=',' read -r name age; do
          echo "Name: $name, Age: $age"
      done < "students.txt"
-
 4. 综合示例
    - 示例：读取 CSV 文件并处理每行数据。
      IFS=',' read -r name age grade
@@ -608,4 +604,63 @@ sudo apt install nginx
 sudo apt purge nginx
 apt show nginx
 apt list  --installed
+
 ---------------------------WEEK12----------------------------
+
+1)		#grep
+# Search for a specific word in a text file
+	grep 'error' logfile.txt
+# Use -i option to ignore case
+	grep -i 'error' logfile.txt
+# Recursive search: searches in all files under the current directory
+	grep -r 'need' .
+# Show line numbers
+	grep -n 'error' logfile.txt
+# Exact word match: "error" but not "errors" or "ERRORS"
+	grep -w 'error' logfile.txt
+1.1)	Regular Expressions
+	# Matches "Friend" or "friend" only
+	egrep '[Ff]riend' poem2.txt
+	# Matches "Friend", "friend", "Ffriend", "fFriend"
+	egrep '[Ff]+riend' poem2.txt
+
+
+
+p8
+2)		Components of Regular Expressions
+# Atoms
+- Single character: Matches any letter, number, or symbol.
+- Escape character: Use '\' to escape special characters 
+	(e.g., \d for digits, \s for whitespace).
+# Wildcards
+- . : Matches any single character except newline.
+# Character classes
+- []: Defines a set of characters 
+	(e.g., [a-z] matches lowercase letters).
+- ^: Negates a set 
+	(e.g., [^0-9] matches non-digits).
+# Repetition
+- + : Matches one or more of the preceding element.
+- * : Matches zero or more of the preceding element.
+- ? : Matches zero or one of the preceding element.
+- {n}: Matches exactly n times.
+- {n,}: Matches at least n times.
+- {n,m}: Matches between n and m times.
+
+# Alternation
+- | : Specifies alternative options.
+
+# Grouping
+- (): Groups expressions for operations (e.g., repetition or alternation).
+
+# Capturing/Backreferences
+- (): Captures subexpressions.
+- \n: Refers to the nth captured group.
+
+# Examples
+- Match a string starting with a digit followed by letters: ^\d[a-zA-Z]+$
+- Match an email address: ^\w+@\w+\.\w+$
+- Match an IP address: ^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$
+
+
+
