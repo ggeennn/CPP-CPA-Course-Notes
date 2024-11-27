@@ -608,4 +608,4 @@ sudo apt install nginx
 sudo apt purge nginx
 apt show nginx
 apt list  --installed
-
+---------------------------WEEK12----------------------------
