@@ -567,4 +567,45 @@ apt
 # Summary:
 - Program -> Library Functions -> Operating System -> Hardware.
 
-p27
+		# IFS 和 read -r 的知识点
+
+1. IFS（Internal Field Separator）
+   - 描述：IFS是Bash中的一个特殊变量，用于定义分隔符，用于分割输入的数据。默认包含空格、制表符和换行符。
+   - 示例：
+     IFS=',' read -r name age
+
+2. read 命令
+   - 描述：read命令用于从标准输入读取一行数据，并将其拆分为多个变量。
+   - `-r` 选项：防止反斜杠（\）被转义。
+   - 示例：
+     read -r first_name last_name
+
+3. done < 用法
+   - 描述：done < 将文件内容传递给 while 循环中的 read 命令，逐行读取文件内容。
+   - 示例：
+     while IFS=',' read -r name age; do
+         echo "Name: $name, Age: $age"
+     done < "students.txt"
+
+4. 综合示例
+   - 示例：读取 CSV 文件并处理每行数据。
+     IFS=',' read -r name age grade
+     while IFS=',' read -r name age grade; do
+         echo "Name: $name, Age: $age, Grade: $grade"
+     done < "students.csv"
+
+		# WINGET
+winget search string  winget search notepad++
+winget list winget list notepad++
+winget show package  winget show "Google Chrome"
+winget install package  winget install "Google Chrome“
+winget uninstall package
+
+		#apt
+sudo apt update
+sudo apt upgrade
+sudo apt install nginx
+sudo apt purge nginx
+apt show nginx
+apt list  --installed
+
