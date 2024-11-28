@@ -624,43 +624,105 @@ apt list  --installed
 	# Matches "Friend", "friend", "Ffriend", "fFriend"
 	egrep '[Ff]+riend' poem2.txt
 
-
-
-p8
 2)		Components of Regular Expressions
 # Atoms
-- Single character: Matches any letter, number, or symbol.
-- Escape character: Use '\' to escape special characters 
-	(e.g., \d for digits, \s for whitespace).
+- Single character: a, 1, $
+  Example: grep 'a' file.txt (matches any line containing 'a')
+- Escape character: \d (matches a digit)
+  Example: egrep '\d' file.txt (matches any line containing a digit)
+========
 # Wildcards
-- . : Matches any single character except newline.
+- . : Matches any single character
+  Example: egrep 'a.b' file.txt (matches 'aab', 'acb', etc., but not 'ab')
+=========
 # Character classes
-- []: Defines a set of characters 
-	(e.g., [a-z] matches lowercase letters).
-- ^: Negates a set 
-	(e.g., [^0-9] matches non-digits).
+- []: Defines a set of characters
+  Example: egrep '[aeiou]' file.txt (matches any vowel)
+- [a-z]: Matches a range
+  Example: egrep '[a-z]' file.txt (matches any lowercase letter)
+- ^ inside []: Negates a set
+  Example: egrep '[^0-9]' file.txt (matches any non-digit)
+=========
 # Repetition
-- + : Matches one or more of the preceding element.
-- * : Matches zero or more of the preceding element.
-- ? : Matches zero or one of the preceding element.
-- {n}: Matches exactly n times.
-- {n,}: Matches at least n times.
-- {n,m}: Matches between n and m times.
-
+- .....: Matches exactly 5 consecutive characters.
+  Equivalent to `.{5}`
+- + : Matches one or more preceding atom
+  Example: egrep 'go+' file.txt (matches 'go', 'goo', 'gooo', etc.)
+- * : Matches zero or more preceding atom
+  Example: egrep 'go*' file.txt (matches 'g', 'go', 'goo', etc.)
+- ? : Matches zero or one preceding atom
+  Example: egrep 'colou?r' file.txt (matches 'color' or 'colour')
+- {n}: Matches exactly n preceding atom
+  Example: egrep 'a{3}' file.txt (matches 'aaa')
+- {n,}: Matches at least n preceding atom
+  Example: egrep 'a{2,}' file.txt (matches 'aa', 'aaa', 'aaaa', etc.)
+- {n,m}: Matches between n and m preceding atom
+  Example: egrep 'a{2,4}' file.txt (matches 'aa', 'aaa', 'aaaa')
+	# # # # # # # # # #
+	# Important notes #
+	# # # # # # # # # #
+- Repetition qualifiers only apply to the preceding element.
+- Use parentheses to group multiple characters: (ab){3}.
+* Repetition qualifiers are placed after the character or group they modify.
+* Single character repetition
+	a{3}	# Matches "aaa" (exactly three consecutive 'a's).
+* Group repetition
+	(ab){3}	# Matches "ababab" (three consecutive "ab" groups).
+* Wildcard repetition
+	.*	# Matches any character (except newline) zero or more times.
+* Character class repetition
+	[a-z]{2,4} # Matches 2 to 4 lowercase letters.
+========
 # Alternation
-- | : Specifies alternative options.
-
+- | : Specifies alternatives
+  Example: egrep 'cat|dog' file.txt (matches 'cat' or 'dog')
+=========
 # Grouping
-- (): Groups expressions for operations (e.g., repetition or alternation).
-
+- (): Groups expressions
+  Example: egrep '(ab)+' file.txt (matches 'ab', 'abab', 'ababab', etc.)
+=========
 # Capturing/Backreferences
-- (): Captures subexpressions.
-- \n: Refers to the nth captured group.
-
-# Examples
-- Match a string starting with a digit followed by letters: ^\d[a-zA-Z]+$
-- Match an email address: ^\w+@\w+\.\w+$
-- Match an IP address: ^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$
-
-
-
+- (): Captures matched groups
+  Example: egrep '(go)+od' file.txt (matches 'good', 'gogood', 'gogogood')
+- \n: Refers to nth captured group
+  Example: egrep '([a-z])\1' file.txt (matches repeated characters like 'aa' or 'bb')
+=========
+2.1)	# Examples and Explanations
+# Match a string starting with a digit followed by letters:
+   egrep '^\d[a-zA-Z]+$' file.txt
+   - `^`: Start of the string.
+   - `\d`: A single digit (0-9).
+   - `[a-zA-Z]+`: One or more letters (upper or lowercase).
+   - `$`: End of the string.
+   Matches: `1abc`, `7Hello`.  
+   Non-matches: `abc1`, `123`.
+# Match an email address:
+   egrep '^\w+@\w+\.\w+$' file.txt
+   - `^`: Start of the string.
+   - `\w+`: One or more word characters (letters, digits, `_`).
+   - `@`: Literal `@` character.
+   - `\w+`: One or more word characters for the domain.
+   - `\.`: A literal dot.
+   - `\w+`: One or more word characters for the top-level domain.
+   - `$`: End of the string.
+   Matches: `user@gmail.com`, `name123@domain.org`.  
+   Non-matches: `@gmail.com`, `user@domain`.
+# Match an IP address:
+   egrep '^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$' file.txt
+   - `^`: Start of the string.
+   - `(25[0-5]|2[0-4]\d|[01]?\d\d?)`: Match 0-255:
+       - `25[0-5]`: Numbers 250-255.
+       - `2[0-4]\d`: Numbers 200-249.
+       - `[01]?\d\d?`: Numbers 0-199 (optional leading `0` or `1`).
+   - `\.`: Literal dot.
+   - `{3}`: Repeat 3 times for 4 total segments.
+   - `$`: End of the string.
+   Matches: `192.168.0.1`, `255.255.255.255`.  
+   Non-matches: `256.1.1.1`, `192.168.1`.
+=======
+2.2)	# More Rules & Anchors 
+- '\.'		Matches lines with a literal period.
+- '^start'	Anchors at the start of a line.   
+- 'end$'	Anchors at the end of a line. 
+- '\<te'	Matches 'te' at the start of a word.(like 'test')
+- 'ld\>' 	Matches 'ld' at the end of a word.(like 'world')
