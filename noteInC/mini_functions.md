@@ -1,4 +1,5 @@
 //////////////clean buffer///////////////
+
 1.1）	getchar (from stdin)
 
 	while (getchar() != '\n');  // 跳过直到换行符
