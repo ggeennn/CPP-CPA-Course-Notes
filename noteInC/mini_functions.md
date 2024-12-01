@@ -8,6 +8,7 @@
 1.2）	fgetc (from file)
 
 	while (fgets(line, sizeof(line), fp)) {  
+ 
  	//check if not reading the whole line
 		if(strchr(line,'\n') == NULL && strlen(line) == sizeof(line)-1){
 			int ch;
