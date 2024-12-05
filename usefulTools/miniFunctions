@@ -1,0 +1,46 @@
+
+
+//////////////clean buffer///////////////
+
+1.1）	getchar (from stdin)
+
+	while (getchar() != '\n');  // 跳过直到换行符
+	while (getchar() != EOF);  // 跳过直到文件末尾
+ 
+1.2）	fgetc (from file)
+
+	while (fgets(line, sizeof(line), fp)) {  
+ 	//check if not reading the whole line
+		if(strchr(line,'\n') == NULL && strlen(line) == sizeof(line)-1){
+			int ch;
+			do{
+				ch = fgetc(fp);
+			}while(ch != '\n' && ch != EOF); // clean up buffer
+		}
+	}
+//////////////////////////////////////
+通过 getchar() 获取用户的输入，以判断是否继续搜索:
+#include <stdio.h>
+
+int main() {
+    char choice;
+    
+    do {
+        // 你的程序逻辑
+
+        // 提示用户是否继续
+        printf("Keep searching? y(yes) / n(no): ");
+        
+        // 使用 getchar() 获取用户输入
+        choice = getchar();
+        
+        // 清除输入缓冲区中的换行符
+        while (getchar() != '\n');  // 防止缓冲区中的换行符影响后续输入
+
+    } while (choice == 'y' || choice == 'Y');  // 如果用户输入'y'或'Y'，则继续循环
+
+    printf("Exiting...\n");
+    
+    return 0;
+}
+///////////////////////////////
