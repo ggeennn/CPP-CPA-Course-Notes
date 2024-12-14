@@ -1,0 +1,219 @@
+https://bakadesuyo.com/2014/08/how-to-stop-being-lazy/
+
+1）select name of identifier:
+"camelNotation" (first letter of each word is capitalized with the exception of the first word)
+
+2）
+Array 声明array时size如果不够大，输出时会有runtime error
+
+3）头文件xxx.h保护:
+#ifndef _XXX_H_
+#define _XXX_H_(保护定义的名称不一定与头文件名称一致）
+...code here...
+#endif
+3.1）I/O缓冲区????PROJECT实例？？？？？？
+I/O Buffer
+3.2）
+键盘输入 -> [输入缓冲区] -> 程序读取
+
+// 如果缓冲区不为空：
+[a][a][\n] -> 非法输入，程序会继续处理这些内容
+              不会等待新的键盘输入
+
+// 只有当缓冲区为空时：
+[] -> 程序才会等待新的键盘输入
+3.3）
+getchar()
+它是 C 语言的标准输入函数
+每次调用时只读取一个字符
+返回读取到的字符的 ASCII 值
+如果读到文件末尾，返回 EOF（通常是 -1）
+while (getchar() != '\n');  // 清空缓冲区
+
+4）
+harry.grade：表示 grade 数组的首地址。
+harry.grade[0]：表示 grade 数组第一个元素的值。
+
+5）
+(void*) 是一个类型转换，允许将其他类型的指针转换为通用的 void* 指针
+
+6）
+\n: 转义了字符 n，使其变成换行符
+\\n: 转义了第二个反斜杠，结果只显示一个反斜杠+字符n
+
+7）*p=。。。将值写入地址p
+   。。。=*p 读取地址p中的值
+
+--------------------------TEXT FILES-----------------------
+			Secondary Storage
+	-Retains data when the computer is off.
+	-Stores information as files for later access.
+
+1)		File
+-Definition: A named area in secondary storage.
+-Non-contiguous: Files may consist of fragments in non-contiguous locations.
+-Unit: Byte is the basic storage unit of a file.
+-EOF: End-Of-File marker, typically -1.
+1.1)	Key Operations
+-Connect program to a file.
+Store information in a file.
+Retrieve information from a file.
+
+2)		File Format(text/binary)
+Text: Readable and editable data.
+#Portable across platforms with the same character set.
+#Character Set: IEC/ISO 646-1083 Invariant Code Set.
+  - Alphabetic Characters: A-Z, a-z (52 total).
+  - Digits: 0-9 (10 total).
+  - Space and Control Characters: \0, \l, \n, \t, \v, \f.
+  - Graphic Characters: e.g., ! # % ^ & * (29 total).
+	*Excludes $ and ` due to inconsistent encoding.
+2.1)	Sequential Access
+Access files sequentially, byte by byte.
+Process files as a byte stream until EOF.
+
+3)		Connection
+-C programs connect to files through FILE type objects.
+-FILE type objects store file info and track the next access position.
+3.1)	File Pointer
+-Syntax: FILE *identifier;
+-Handle: The pointer is a handle to the FILE object.
+*Access files by storing the FILE object address in a pointer.
+3.2)	FILE Structure Type	//Declared in: <stdio.h>
+-Example:
+#include <stdio.h>
+FILE *fp = NULL;	//NULL is defined in <stdio.h>.
+*Initialize fp to NULL to avoid premature dereferencing.
+*Accessing data at fp before opening causes segmentation fault.
+
+4)	"r": Read from the file.
+	"w": Write to the file; truncates if exists, creates if not.
+	"a": Append to the file; creates if not exists.
+		fprintf() - 格式化写入文件
+	fprintf(fp, "sku = %d price = %.2f\n", sku, price);
+	解释: 将格式化的整数和浮点数写入文件。
+		fputc(int ch, FILE *fp) - 写入单个字符到文件
+	fputc('A', fp);
+	解释: 将字符 'A' 写入文件。
+		 fscanf() - 从文件中格式化读取
+	fscanf(fp, "%d %lf", &sku, &price);
+	解释: 从文件读取整数和浮点数。
+		fgetc(FILE *fp) - 从文件中读取单个字符
+	int ch = fgetc(fp);
+	解释: 从文件读取一个字符。
+		rewind(fp)
+	Reset file pointer to the beginning
+		int eof = feof(fp)
+	Check End of File (EOF): Returns 1 if EOF reached, 0 otherwise
+
+---------------------------String Library------------------------------
+
+1).	String Functions
+strlen(): 
+Returns the number of characters in a character string(excluding '\0')
+strcpy(): 
+- Copy 2nd to 1st, Ensure enough space for the destination string, including the null terminator, otherwise strcpy function won't work
+strcmp(): 
+- Compares two strings， Returns:
+    - 0 if identical
+    - Negative if first string is smaller
+    - Positive if first string is larger
+strcat(): 
+- Appends the second string to the first.
+- Ensure sufficient space for the destination string.
+
+2).	scanf with %30[^\n]%*c
+%30[^\n]:	Reads up to 30 characters or stops at (\n), excludes \n from input.
+%*c: 		Reads and discards the next character (usually the newline).
+Purpose: 	Clears the newline character left in the input buffer.
+			
+3).	puts()
+Outputs a string to the console, appending a newline (\n) automatically.
+
+4).	Reversing a String (Code Example)
+int len = strlen(str);
+for (int i = len - 1; i >= 0; i--) {
+    rev[len - 1 - i] = str[i];}
+rev[len] = '\0';
+puts(rev);
+
+----------------------------more I/O-----------------------------
+
+5).	Whitespace Handling with %c
+Adding a space before %c skips any leading whitespace (e.g., spaces, tabs, newlines) and waits for non-whitespace input.
+Key Tip: Always use " %c" if %c follows another scanf call.
+
+6).	%n Conversion Specifier
+%n doesn't read characters but stores the number of characters processed so far into the specified variable.
+Useful for tracking how much input has been consumed
+
+7).	`%[ ]` and `%[^ ]` Specifiers
+- `%[ ]`: Reads a sequence of characters that match the ones specified inside the brackets. It stops when it encounters a character not in the set.
+- `%[^ ]`: Reads a sequence of characters **not** in the set. It stops when it encounters a character in the set.
+- **Example**:
+  scanf("%[a-zA-Z]", name);  // Reads alphabetic characters only
+  scanf("%[^,]", value);     // Reads until encountering a comma
+
+8).	# Unformatted Input Functions
+	1. **getchar()**
+   - **Prototype**: `int getchar(void);`
+   - Reads a single character from standard input. Returns the character or EOF.
+	2. **fgetc()**
+   - **Prototype**: `int fgetc(FILE *stream);`
+   - Reads a single character from a file. Returns the character or EOF.
+	3. **gets_s()**
+   - **Prototype**: `errno_t gets_s(char *str, rsize_t n);`
+   - Reads a line from standard input, ensuring no overflow (max size `n`). Replaces newline with `\0`.
+	4. **fgets()**
+   - **Prototype**: `char *fgets(char *str, int n, FILE *stream);`
+   - Reads a line from a file, including newline `\n`. Stops after `n-1` characters, appends `\0`.
+# Key Points
+- **End of Line**: `fgets()` and `gets_s()` include `\n` but `gets_s()` replaces it with `\0`.
+- **Buffer Size**: Functions limit input to `n-1` characters, ensuring no overflow.
+- **Return Values**: Functions return the string or NULL/EOF on error or end of file.
+
+9).	return value of scanf
+
+------------------------------Libraries-------------------------------
+
+1)		# Standard Library: <stdlib.h>
+
+1.1)	Integer Absolute Value
+## Functions:
+- **abs(int)**: Returns the absolute value of an integer.
+- **labs(long)**: Returns the absolute value of a long integer.
+- **llabs(long long)**: Returns the absolute value of a long long integer.
+## Example:
+```c
+int x = -12;
+long y = -24L;
+printf("|%d| is %d\n", x, abs(x));   // Output: |-12| is 12
+printf("|%ld| is %ld\n", y, labs(y)); // Output: |-24| is 24
+
+1.2)	Random Numbers
+**rand()**: Returns pseudo-random integers between 0 and RAND_MAX.  
+ Prototype: `int rand(void);`
+
+* Generate integers:
+  - Range: [0, RAND_MAX]
+  - Example:
+    int r = rand(); // r is in [0, RAND_MAX]
+
+* Generate integers within range [a, b]:
+  Formula: n = a + rand() % (b + 1 - a);
+
+* Generate floating-point numbers within range [a, b]:
+  Formula: x = a + ((double)rand() / RAND_MAX * (b - a));
+
+- Use `srand(unsigned seed)` to set seed for random sequence:
+  - Example: `srand(time(NULL)); // from <time.h>, different random sequence per run`
+
+1.3)	time
+
+
+
+
+
+
+
+
