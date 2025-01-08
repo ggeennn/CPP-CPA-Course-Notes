@@ -332,57 +332,57 @@ int main() {
   - 更灵活：可以轻松处理不同类型的输入输出 | More flexible: Easy handling of different input/output types
 
 ### 3.6 封装 (Encapsulation) 🟡
-+ > 原文：Encapsulation shields the complex details of a class' implementation from its interface; that is, its crisp external representation. Consider the following statement from the preceding chapter:
-+ > cout << "Welcome to Object-Oriented";
-+ > cout refers to the standard output object. Its class defines how to store the object's data in memory and how to control the operations that work with that data. The << operator copies the string to the output object without exposing any of the implementation details. As client programmers, we only see the interface that manages the output process.
-+ 
-+ 💡 解析步骤 | Analysis Steps:
-+ 1. 关键词提取 | Key Terms:
-+    - encapsulation (封装)
-+    - implementation details (实现细节)
-+    - interface (接口)
-+    - client programmers (客户端程序员)
-+ 
-+ 2. 核心概念 | Core Concepts:
-+    - 封装是隐藏实现细节的机制
-+    - 只向外部暴露必要的接口
-+    - 将实现与接口分离
-+ 
-+ 3. 简化解释 | Simplified Explanation:
-+    - 封装就像是把复杂的机器放在盒子里
-+    - 只露出必要的按钮（接口）给使用者
-+    - 使用者不需要知道内部如何工作
-+ 
-+ 4. 具体示例 | Concrete Examples:
-+    ```cpp
-+    // 不好的设计（没有封装）| Bad design (no encapsulation)
-+    class BankAccount_Bad {
-+    public:
-+        double balance;  // 直接暴露数据 | Directly exposed data
-+    };
-+ 
-+    // 好的设计（使用封装）| Good design (with encapsulation)
-+    class BankAccount_Good {
-+    private:
-+        double balance;  // 数据被保护 | Protected data
-+ 
-+    public:
-+        // 只提供安全的接口 | Only provide safe interface
-+        void deposit(double amount) {
-+            if (amount > 0) {
-+                balance += amount;
-+            }
-+        }
-+ 
-+        bool withdraw(double amount) {
-+            if (amount > 0 && amount <= balance) {
-+                balance -= amount;
-+                return true;
-+            }
-+            return false;
-+        }
-+    };
-+    ```
+> 原文：Encapsulation shields the complex details of a class' implementation from its interface; that is, its crisp external representation. Consider the following statement from the preceding chapter:
+> cout << "Welcome to Object-Oriented";
+> cout refers to the standard output object. Its class defines how to store the object's data in memory and how to control the operations that work with that data. The << operator copies the string to the output object without exposing any of the implementation details. As client programmers, we only see the interface that manages the output process.
+
+💡 解析步骤 | Analysis Steps:
+1. 关键词提取 | Key Terms:
+   - encapsulation (封装)
+   - implementation details (实现细节)
+   - interface (接口)
+   - client programmers (客户端程序员)
+
+2. 核心概念 | Core Concepts:
+   - 封装是隐藏实现细节的机制
+   - 只向外部暴露必要的接口
+   - 将实现与接口分离
+
+3. 简化解释 | Simplified Explanation:
+   - 封装就像是把复杂的机器放在盒子里
+   - 只露出必要的按钮（接口）给使用者
+   - 使用者不需要知道内部如何工作
+
+4. 具体示例 | Concrete Examples:
+   ```cpp
+   // 不好的设计（没有封装）| Bad design (no encapsulation)
+   class BankAccount_Bad {
+   public:
+       double balance;  // 直接暴露数据 | Directly exposed data
+   };
+
+   // 好的设计（使用封装）| Good design (with encapsulation)
+   class BankAccount_Good {
+   private:
+       double balance;  // 数据被保护 | Protected data
+
+   public:
+       // 只提供安全的接口 | Only provide safe interface
+       void deposit(double amount) {
+           if (amount > 0) {
+               balance += amount;
+           }
+       }
+
+       bool withdraw(double amount) {
+           if (amount > 0 && amount <= balance) {
+               balance -= amount;
+               return true;
+           }
+           return false;
+       }
+   };
+   ```
 
 - 定义 | Definition
   - 面向对象编程的主要概念 | Primary concept of OOP
@@ -396,53 +396,53 @@ int main() {
   - 提供清晰的外部接口 | Provides clean external interface
 
 ### 3.7 继承 (Inheritance) 🟡
-+ > 原文：A well-encapsulated class hides all implementation details within itself. The client does not see the data that the class' object stores within itself or the logic that it uses to manage its internal data. The client only sees a clean and simple interface to the object.
-+ > As long as the classes in a programming solution are well-encapsulated, any programmer can upgrade the internal structure of any object developed by another programmer without changing any client code.
-+ 
-+ 💡 解析步骤 | Analysis Steps:
-+ 1. 关键词提取 | Key Terms:
-+    - inheritance (继承)
-+    - base class (基类)
-+    - derived class (派生类)
-+    - inheritance types (继承类型)
-+ 
-+ 2. 核心概念 | Core Concepts:
-+    - 继承是类之间共享代码的机制
-+    - 派生类可以重用基类的功能
-+    - 支持代码的层次化组织
-+ 
-+ 3. 简化解释 | Simplified Explanation:
-+    - 继承就像是创建一个"特殊版本"的类
-+    - 新类可以使用原有类的所有功能
-+    - 还可以添加自己的新功能
-+ 
-+ 4. 具体示例 | Concrete Examples:
-+    ```cpp
-+    // 基类：动物 | Base class: Animal
-+    class Animal {
-+    protected:
-+        string name;
-+        int age;
-+    
-+    public:
-+        void eat() { cout << "Eating..." << endl; }
-+        void sleep() { cout << "Sleeping..." << endl; }
-+    };
-+    
-+    // 派生类：狗 | Derived class: Dog
-+    class Dog : public Animal {
-+    private:
-+        string breed;  // 狗的特有属性 | Dog-specific property
-+    
-+    public:
-+        // 继承了eat()和sleep()方法
-+        // 添加新的方法 | Adding new method
-+        void bark() { cout << "Woof!" << endl; }
-+        
-+        // 设置名字（使用继承的protected成员）
-+        void setName(string n) { name = n; }
-+    };
-+    ```
+> 原文：A well-encapsulated class hides all implementation details within itself. The client does not see the data that the class' object stores within itself or the logic that it uses to manage its internal data. The client only sees a clean and simple interface to the object.
+> As long as the classes in a programming solution are well-encapsulated, any programmer can upgrade the internal structure of any object developed by another programmer without changing any client code.
+
+💡 解析步骤 | Analysis Steps:
+1. 关键词提取 | Key Terms:
+   - inheritance (继承)
+   - base class (基类)
+   - derived class (派生类)
+   - inheritance types (继承类型)
+
+2. 核心概念 | Core Concepts:
+   - 继承是类之间共享代码的机制
+   - 派生类可以重用基类的功能
+   - 支持代码的层次化组织
+
+3. 简化解释 | Simplified Explanation:
+   - 继承就像是创建一个"特殊版本"的类
+   - 新类可以使用原有类的所有功能
+   - 还可以添加自己的新功能
+
+4. 具体示例 | Concrete Examples:
+   ```cpp
+   // 基类：动物 | Base class: Animal
+   class Animal {
+   protected:
+       string name;
+       int age;
+   
+   public:
+       void eat() { cout << "Eating..." << endl; }
+       void sleep() { cout << "Sleeping..." << endl; }
+   };
+   
+   // 派生类：狗 | Derived class: Dog
+   class Dog : public Animal {
+   private:
+       string breed;  // 狗的特有属性 | Dog-specific property
+   
+   public:
+       // 继承了eat()和sleep()方法
+       // 添加新的方法 | Adding new method
+       void bark() { cout << "Woof!" << endl; }
+       
+       // 设置名字（使用继承的protected成员）
+       void setName(string n) { name = n; }
+   };
+   ```
 
 - 定义 | Definition
   - 一个类继承另一个类的结构 | One class inherits structure of another
@@ -479,90 +479,90 @@ int main() {
   - 多层继承：支持类的层次结构 | Multi-level inheritance: supports class hierarchy
 
 ### 3.8 多态 (Polymorphism) 🟡
-+ > 原文：Polymorphism allows a single interface to represent different underlying forms (data types or classes). The program can process objects differently based on their data type or class. Polymorphism is extensively used in implementing inheritance.
-+ 
-+ 💡 解析步骤 | Analysis Steps:
-+ 1. 关键词提取 | Key Terms:
-+    - polymorphism (多态)
-+    - interface (接口)
-+    - virtual functions (虚函数)
-+    - runtime binding (运行时绑定)
-+ 
-+ 2. 核心概念 | Core Concepts:
-+    - 同一个接口可以有多种实现
-+    - 程序在运行时决定调用哪个实现
-+    - 通过虚函数实现动态绑定
-+ 
-+ 3. 简化解释 | Simplified Explanation:
-+    - 多态就像是"万能遥控器"
-+    - 同一个按钮可以控制不同的设备
-+    - 具体控制什么设备在使用时才确定
-+ 
-+ 4. 具体示例 | Concrete Examples:
-+    ```cpp
-+    // 基类：形状 | Base class: Shape
-+    class Shape {
-+    public:
-+        // 纯虚函数：必须在派生类中实现
-+        // Pure virtual function: must be implemented in derived classes
-+        virtual double area() = 0;
-+        virtual void draw() = 0;
-+    };
-+    
-+    // 派生类：圆形 | Derived class: Circle
-+    class Circle : public Shape {
-+    private:
-+        double radius;
-+    
-+    public:
-+        Circle(double r) : radius(r) {}
-+        
-+        // 实现虚函数 | Implementing virtual functions
-+        double area() override {
-+            return 3.14 * radius * radius;
-+        }
-+        
-+        void draw() override {
-+            cout << "Drawing a circle" << endl;
-+        }
-+    };
-+    
-+    // 派生类：矩形 | Derived class: Rectangle
-+    class Rectangle : public Shape {
-+    private:
-+        double width, height;
-+    
-+    public:
-+        Rectangle(double w, double h) : width(w), height(h) {}
-+        
-+        double area() override {
-+            return width * height;
-+        }
-+        
-+        void draw() override {
-+            cout << "Drawing a rectangle" << endl;
-+        }
-+    };
-+    
-+    // 多态使用示例 | Polymorphism usage example
-+    void processShape(Shape* shape) {
-+        cout << "Area: " << shape->area() << endl;
-+        shape->draw();
-+    }
-+    
-+    int main() {
-+        Shape* shapes[] = {
-+            new Circle(5),
-+            new Rectangle(4, 6)
-+        };
-+        
-+        // 同一个函数处理不同类型的对象
-+        // Same function handles different types of objects
-+        for (Shape* shape : shapes) {
-+            processShape(shape);
-+        }
-+    }
-+    ```
+> 原文：Polymorphism allows a single interface to represent different underlying forms (data types or classes). The program can process objects differently based on their data type or class. Polymorphism is extensively used in implementing inheritance.
+ 
+💡 解析步骤 | Analysis Steps:
+1. 关键词提取 | Key Terms:
+   - polymorphism (多态)
+   - interface (接口)
+   - virtual functions (虚函数)
+   - runtime binding (运行时绑定)
+
+2. 核心概念 | Core Concepts:
+   - 同一个接口可以有多种实现
+   - 程序在运行时决定调用哪个实现
+   - 通过虚函数实现动态绑定
+
+3. 简化解释 | Simplified Explanation:
+   - 多态就像是"万能遥控器"
+   - 同一个按钮可以控制不同的设备
+   - 具体控制什么设备在使用时才确定
+
+4. 具体示例 | Concrete Examples:
+   ```cpp
+   // 基类：形状 | Base class: Shape
+   class Shape {
+   public:
+       // 纯虚函数：必须在派生类中实现
+       // Pure virtual function: must be implemented in derived classes
+       virtual double area() = 0;
+       virtual void draw() = 0;
+   };
+   
+   // 派生类：圆形 | Derived class: Circle
+   class Circle : public Shape {
+   private:
+       double radius;
+   
+   public:
+       Circle(double r) : radius(r) {}
+       
+       // 实现虚函数 | Implementing virtual functions
+       double area() override {
+           return 3.14 * radius * radius;
+       }
+       
+       void draw() override {
+           cout << "Drawing a circle" << endl;
+       }
+   };
+   
+   // 派生类：矩形 | Derived class: Rectangle
+   class Rectangle : public Shape {
+   private:
+       double width, height;
+   
+   public:
+       Rectangle(double w, double h) : width(w), height(h) {}
+       
+       double area() override {
+           return width * height;
+       }
+       
+       void draw() override {
+           cout << "Drawing a rectangle" << endl;
+       }
+   };
+   
+   // 多态使用示例 | Polymorphism usage example
+   void processShape(Shape* shape) {
+       cout << "Area: " << shape->area() << endl;
+       shape->draw();
+   }
+   
+   int main() {
+       Shape* shapes[] = {
+           new Circle(5),
+           new Rectangle(4, 6)
+       };
+       
+       // 同一个函数处理不同类型的对象
+       // Same function handles different types of objects
+       for (Shape* shape : shapes) {
+           processShape(shape);
+       }
+   }
+   ```
 
 - 定义 | Definition
   - 同一个接口，不同的实现 | Same interface, different implementations
