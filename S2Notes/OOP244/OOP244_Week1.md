@@ -17,10 +17,12 @@
    - [3.2 抽象 (Abstraction)](#32-抽象-abstraction-)
    - [3.3 UML建模 (UML Modeling)](#33-uml建模-uml-modeling-)
    - [3.4 C++特性 (C++ Features)](#34-c特性-c-features-)
-   - [3.5 输入输出 (I/O)](#35-输入输出-io-)
-   - [3.6 封装 (Encapsulation)](#36-封装-encapsulation-)
-   - [3.7 继承 (Inheritance)](#37-继承-inheritance-)
-   - [3.8 多态 (Polymorphism)](#38-多态-polymorphism-)
+   - [3.5 模块化编程 (Modular Programming)](#35-模块化编程-modular-programming-)
+   - [3.6 调试技术 (Debugging Techniques)](#36-调试技术-debugging-techniques-)
+   - [3.7 输入输出 (I/O)](#37-输入输出-io-)
+   - [3.8 封装 (Encapsulation)](#38-封装-encapsulation-)
+   - [3.9 继承 (Inheritance)](#39-继承-inheritance-)
+   - [3.10 多态 (Polymorphism)](#310-多态-polymorphism-)
 4. [实践示例 (Practice Examples)](#4-实践示例-practice-examples-)
 5. [重要概念框架 (Key Concepts Framework)](#5-重要概念框架-key-concepts-framework-)
 6. [学习建议 (Study Tips)](#6-学习建议-study-tips-)
@@ -44,9 +46,11 @@
 1. 理解对象和类的基本概念 | Understanding Objects and Classes
 2. 掌握抽象和封装 | Mastering Abstraction and Encapsulation
 3. 掌握UML建模基础 | Understanding Basic UML Modeling
-4. 学习C++特性和I/O | Learning C++ Features and I/O
-5. 掌握封装原则 | Mastering Encapsulation Principles
-6. 学习继承和多态 | Learning Inheritance and Polymorphism
+4. 学习C++特性 | Learning C++ Features
+5. 理解模块化编程 | Understanding Modular Programming
+6. 学习输入输出操作 | Learning I/O Operations
+7. 掌握封装原则 | Mastering Encapsulation Principles
+8. 学习继承和多态 | Learning Inheritance and Polymorphism
 
 ## 3. 知识点详解 (Detailed Content)📝
 
@@ -184,7 +188,7 @@
     - 简单清晰的抽象 | Simple and crisp abstraction
     - 内部实现复杂 | Complex internal implementation
 
-### 3.3 UML建模 (UML Modeling) 🟢
+### 3.3 UML建模 (Unified Modelling Language Modeling) 🟢
 - 定义 | Definition
   - 用于描述对象系统和类之间关系的通用建模语言
   - General-purpose modeling language for describing systems of objects and relationships
@@ -285,7 +289,241 @@ int main() {
 *形参（parameter）是函数定义的一部分，表示函数期望接收的输入。
 *实参（argument）是函数调用时提供的具体值，用于替换函数定义中的参数。
 
-### 3.5 输入输出 (I/O) 🟢
+### 3.5 模块化编程 (Modular Programming) 🟢
+
+> 原文：A modular design consists of a set of modules, which are developed and tested separately. A module consists of a header file and an implementation file. A module's header file declares the names that are exposed to client modules, while the implementation file defines the module's logic.
+
+💡 解析步骤 | Analysis Steps:
+1. 关键词提取 | Key Terms:
+   - modular design (模块化设计)
+   - header file (头文件)
+   - implementation file (实现文件)
+   - client modules (客户端模块)
+
+2. 核心概念 | Core Concepts:
+   - 每个模块包含头文件和实现文件
+   - 头文件声明接口
+   - 实现文件包含具体逻辑
+   - 模块可以独立开发和测试
+
+3. 简化解释 | Simplified Explanation:
+   - 模块就像是积木，每个都有特定功能
+   - 头文件像是积木的接口说明书
+   - 实现文件像是积木的内部构造
+   - 不同的积木可以组合使用
+
+4. 具体示例：
+
+#### 3.5.1 模块结构示例 (Module Structure Example) 
+```cpp
+// power.h - 头文件 | Header file
+#ifndef POWER_H
+#define POWER_H
+
+// 函数声明 - 接口 | Function declaration - interface
+int power(int base, int exponent);
+
+#endif
+
+// power.cpp - 实现文件 | Implementation file
+#include "power.h"
+
+// 函数定义 - 实现 | Function definition - implementation
+int power(int base, int exponent) {
+    int result = 1;
+    for (int i = 0; i < exponent; i++) {
+        result *= base;
+    }
+    return result;
+}
+
+// main.cpp - 客户端代码 | Client code
+#include <iostream>
+#include "power.h"
+using namespace std;
+
+int main() {
+    cout << power(2, 3) << endl;  // 输出：8
+    return 0;
+}
+```
+
+#### 3.5.2 模块依赖关系 (Module Dependencies)
+- 头文件包含规则 | Header File Inclusion Rules
+  ```cpp
+  // 1. 实现文件需要包含自己的头文件
+  // Implementation file needs its own header
+  #include "mymodule.h"
+  
+  // 2. 实现文件需要包含使用到的其他模块的头文件
+  // Include headers of other modules used
+  #include "othermodule.h"
+  ```
+
+#### 3.5.3 编译过程 (Compilation Process)
+1. 预处理阶段 | Preprocessing Stage
+   - 处理#include指令 | Process #include directives
+   - 展开宏定义 | Expand macros
+   - 条件编译处理 | Handle conditional compilation
+
+2. 编译阶段 | Compilation Stage
+   - 语法检查 | Syntax checking
+   - 生成目标文件 | Generate object files
+   - 每个.cpp文件独立编译 | Each .cpp file compiled separately
+
+3. 链接阶段 | Linking Stage
+   - 合并目标文件 | Combine object files
+   - 解析外部引用 | Resolve external references
+   - 生成可执行文件 | Create executable file
+
+#### 3.5.4 单元测试最佳实践 (Unit Testing Best Practices)
+```cpp
+// calculator.h
+int add(int a, int b);
+int subtract(int a, int b);
+
+// calculator_test.cpp
+#include "calculator.h"
+
+void testAdd() {
+    // 测试正数相加 | Test adding positive numbers
+    if (add(2, 3) == 5) {
+        cout << "Add test 1 passed" << endl;
+    }
+    
+    // 测试负数相加 | Test adding negative numbers
+    if (add(-2, -3) == -5) {
+        cout << "Add test 2 passed" << endl;
+    }
+}
+
+void testSubtract() {
+    // 基本减法测试 | Basic subtraction test
+    if (subtract(5, 3) == 2) {
+        cout << "Subtract test passed" << endl;
+    }
+}
+
+int main() {
+    testAdd();
+    testSubtract();
+    return 0;
+}
+```
+
+💡 模块化编程最佳实践 | Best Practices
+- 在实现之前编写测试 | Write tests before implementation
+- 保持模块之间的低耦合 | Keep low coupling between modules
+- 确保接口简单清晰 | Ensure simple and clear interfaces
+- 遵循单一职责原则 | Follow single responsibility principle
+
+### 3.6 调试技术 (Debugging Techniques) 🟢
+
+> 原文：Debugging is the process of finding and fixing errors in a program. The debugging process involves identifying the error, finding its location, and determining its cause.
+
+💡 解析步骤 | Analysis Steps:
+1. 关键词提取 | Key Terms:
+   - debugging (调试)
+   - errors (错误)
+   - error identification (错误识别)
+   - error location (错误定位)
+
+2. 核心概念 | Core Concepts:
+   - 调试是发现和修复程序错误的过程
+   - 包括错误识别、定位和原因分析
+   - 需要使用多种工具和技术
+
+3. 简化解释 | Simplified Explanation:
+   - 调试就像是给程序做体检
+   - 找出程序中的"病症"（错误）
+   - 确定"病因"（错误原因）
+   - 进行"治疗"（修复错误）
+
+4. 具体示例和实践：
+
+##### 1. 编程错误类型 | Programming Error Types
+- 语法错误 (Syntactic Errors)
+  ```cpp
+  // 常见语法错误示例 | Common syntax error examples
+  int main() {
+      int x = 5          // 错误：缺少分号 | Error: missing semicolon
+      if (x == 5)        // 错误：缺少花括号 | Error: missing braces
+      return 0;
+  }
+  ```
+
+- 语义错误 (Semantic Errors)
+  ```cpp
+  // 常见语义错误示例 | Common semantic error examples
+  int x;                 // 错误：未初始化变量 | Error: uninitialized variable
+  if (x = 5) { }        // 错误：使用=而不是== | Error: using = instead of ==
+  for (int i = 0; i <= 10; i++) { } // 错误：循环次数多一次 | Error: off-by-one iteration
+  ```
+
+##### 2. 调试技术 | Debugging Techniques
+- 使用IDE调试器 | Using IDE Debugger
+  ```cpp
+  int main() {
+      int x = 5;
+      int y = 0;
+      // 设置断点 | Set breakpoint here
+      y = x * 2;     // 检查x的值 | Check value of x
+      x++;           // 单步执行 | Step through
+      return 0;
+  }
+  ```
+
+- 打印调试 | Print Debugging
+  ```cpp
+  void processData(int data) {
+      cout << "Entering processData with value: " << data << endl;  // 入口点检查
+      if (data < 0) {
+          cout << "Warning: negative value detected" << endl;       // 条件检查
+      }
+      cout << "Exiting processData" << endl;                       // 出口点检查
+  }
+  ```
+
+##### 3. 调试最佳实践 | Debugging Best Practices
+1. 开发过程 | Development Process
+   - 及早调试 | Debug early
+   - 增量式开发 | Incremental development
+   - 保持代码整洁 | Keep code clean
+
+2. 修改策略 | Modification Strategy
+   - 一次只改一处 | Change one thing at a time
+   - 记录所有修改 | Document all changes
+   - 使用版本控制 | Use version control
+
+3. 问题追踪 | Problem Tracking
+   - 记录错误症状 | Record error symptoms
+   - 记录解决方案 | Document solutions
+   - 建立错误模式库 | Build error pattern library
+
+##### 4. IDE调试工具使用 | IDE Debugging Tools
+1. 断点管理 | Breakpoint Management
+   - 设置断点 | Set breakpoints
+   - 条件断点 | Conditional breakpoints
+   - 临时断点 | Temporary breakpoints
+
+2. 执行控制 | Execution Control
+   - 单步执行 (F10) | Step Over
+   - 进入函数 (F11) | Step Into
+   - 跳出函数 (Shift+F11) | Step Out
+   - 继续执行 (F5) | Continue
+
+3. 变量监视 | Variable Watch
+   - 查看变量值 | View values
+   - 修改变量值 | Modify values
+   - 表达式求值 | Evaluate expressions
+
+💡 调试提示 | Debugging Tips
+- 先检查最简单的可能原因 | Check simplest possible causes first
+- 使用排除法缩小问题范围 | Use elimination to narrow down problems
+- 保持代码版本备份 | Keep code backups
+- 写下调试过程 | Document debugging process
+
+### 3.7 输入输出 (I/O) 🟢
 - 指令 | Directive
   - #include <iostream> 用于包含 iostream 库，该库包含 cout、cin 和 endl 对象。
     | Include iostream library which contains cout, cin and endl objects.
@@ -331,7 +569,7 @@ int main() {
   - 更安全：不需要使用地址运算符(&) | Safer: No address operator(&) needed
   - 更灵活：可以轻松处理不同类型的输入输出 | More flexible: Easy handling of different input/output types
 
-### 3.6 封装 (Encapsulation) 🟡
+### 3.8 封装 (Encapsulation) 🟡
 > 原文：Encapsulation shields the complex details of a class' implementation from its interface; that is, its crisp external representation. Consider the following statement from the preceding chapter:
 > cout << "Welcome to Object-Oriented";
 > cout refers to the standard output object. Its class defines how to store the object's data in memory and how to control the operations that work with that data. The << operator copies the string to the output object without exposing any of the implementation details. As client programmers, we only see the interface that manages the output process.
@@ -395,7 +633,7 @@ int main() {
   - 隐藏实现细节 | Hides implementation details
   - 提供清晰的外部接口 | Provides clean external interface
 
-### 3.7 继承 (Inheritance) 🟡
+### 3.9 继承 (Inheritance) 🟡
 > 原文：A well-encapsulated class hides all implementation details within itself. The client does not see the data that the class' object stores within itself or the logic that it uses to manage its internal data. The client only sees a clean and simple interface to the object.
 > As long as the classes in a programming solution are well-encapsulated, any programmer can upgrade the internal structure of any object developed by another programmer without changing any client code.
 
@@ -478,7 +716,7 @@ int main() {
   - 扩展性：可以添加新功能而不修改原有代码 | Extensibility: add new features without modifying existing code
   - 多层继承：支持类的层次结构 | Multi-level inheritance: supports class hierarchy
 
-### 3.8 多态 (Polymorphism) 🟡
+### 3.10 多态 (Polymorphism) 🟡
 > 原文：Polymorphism allows a single interface to represent different underlying forms (data types or classes). The program can process objects differently based on their data type or class. Polymorphism is extensively used in implementing inheritance.
  
 💡 解析步骤 | Analysis Steps:
@@ -617,6 +855,112 @@ int main() {
   }
   ```
 
+#### 3.5.5 调试技术 (Debugging Techniques) 🟢
+
+> 原文：Debugging is the process of finding and fixing errors in a program. The debugging process involves identifying the error, finding its location, and determining its cause.
+
+💡 解析步骤 | Analysis Steps:
+1. 关键词提取 | Key Terms:
+   - debugging (调试)
+   - errors (错误)
+   - error identification (错误识别)
+   - error location (错误定位)
+
+2. 核心概念 | Core Concepts:
+   - 调试是发现和修复程序错误的过程
+   - 包括错误识别、定位和原因分析
+   - 需要使用多种工具和技术
+
+3. 简化解释 | Simplified Explanation:
+   - 调试就像是给程序做体检
+   - 找出程序中的"病症"（错误）
+   - 确定"病因"（错误原因）
+   - 进行"治疗"（修复错误）
+
+4. 具体示例和实践：
+
+##### 1. 编程错误类型 | Programming Error Types
+- 语法错误 (Syntactic Errors)
+  ```cpp
+  // 常见语法错误示例 | Common syntax error examples
+  int main() {
+      int x = 5          // 错误：缺少分号 | Error: missing semicolon
+      if (x == 5)        // 错误：缺少花括号 | Error: missing braces
+      return 0;
+  }
+  ```
+
+- 语义错误 (Semantic Errors)
+  ```cpp
+  // 常见语义错误示例 | Common semantic error examples
+  int x;                 // 错误：未初始化变量 | Error: uninitialized variable
+  if (x = 5) { }        // 错误：使用=而不是== | Error: using = instead of ==
+  for (int i = 0; i <= 10; i++) { } // 错误：循环次数多一次 | Error: off-by-one iteration
+  ```
+
+##### 2. 调试技术 | Debugging Techniques
+- 使用IDE调试器 | Using IDE Debugger
+  ```cpp
+  int main() {
+      int x = 5;
+      int y = 0;
+      // 设置断点 | Set breakpoint here
+      y = x * 2;     // 检查x的值 | Check value of x
+      x++;           // 单步执行 | Step through
+      return 0;
+  }
+  ```
+
+- 打印调试 | Print Debugging
+  ```cpp
+  void processData(int data) {
+      cout << "Entering processData with value: " << data << endl;  // 入口点检查
+      if (data < 0) {
+          cout << "Warning: negative value detected" << endl;       // 条件检查
+      }
+      cout << "Exiting processData" << endl;                       // 出口点检查
+  }
+  ```
+
+##### 3. 调试最佳实践 | Debugging Best Practices
+1. 开发过程 | Development Process
+   - 及早调试 | Debug early
+   - 增量式开发 | Incremental development
+   - 保持代码整洁 | Keep code clean
+
+2. 修改策略 | Modification Strategy
+   - 一次只改一处 | Change one thing at a time
+   - 记录所有修改 | Document all changes
+   - 使用版本控制 | Use version control
+
+3. 问题追踪 | Problem Tracking
+   - 记录错误症状 | Record error symptoms
+   - 记录解决方案 | Document solutions
+   - 建立错误模式库 | Build error pattern library
+
+##### 4. IDE调试工具使用 | IDE Debugging Tools
+1. 断点管理 | Breakpoint Management
+   - 设置断点 | Set breakpoints
+   - 条件断点 | Conditional breakpoints
+   - 临时断点 | Temporary breakpoints
+
+2. 执行控制 | Execution Control
+   - 单步执行 (F10) | Step Over
+   - 进入函数 (F11) | Step Into
+   - 跳出函数 (Shift+F11) | Step Out
+   - 继续执行 (F5) | Continue
+
+3. 变量监视 | Variable Watch
+   - 查看变量值 | View values
+   - 修改变量值 | Modify values
+   - 表达式求值 | Evaluate expressions
+
+💡 调试提示 | Debugging Tips
+- 先检查最简单的可能原因 | Check simplest possible causes first
+- 使用排除法缩小问题范围 | Use elimination to narrow down problems
+- 保持代码版本备份 | Keep code backups
+- 写下调试过程 | Document debugging process
+
 ## 4. 实践示例 (Practice Examples)💻
 
 ### 4.1 基本输出程序 | Basic Output Program
@@ -658,7 +1002,8 @@ int main() {
 │   └── 多态 | Polymorphism
 ├── C++特性 | C++ Features
 │   ├── 命名空间 | Namespaces
-│   └── 类型安全 | Type Safety
+│   ├── 类型安全 | Type Safety
+│   └── 模块化编程 | Modular Programming
 └── 工具支持 | Tool Support
     ├── 输入输出 | I/O
     └── UML建模 | UML Modeling
