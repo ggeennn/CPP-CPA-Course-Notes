@@ -295,22 +295,22 @@ int main() {
 
 💡 解析步骤 | Analysis Steps:
 1. 关键词提取 | Key Terms:
-   - modular design (模块化设计)
-   - header file (头文件)
-   - implementation file (实现文件)
-   - client modules (客户端模块)
+   - 模块化设计 (Modular Design)
+   - 头文件 (Header File)
+   - 实现文件 (Implementation File)
+   - 客户端模块 (Client Modules)
 
 2. 核心概念 | Core Concepts:
-   - 每个模块包含头文件和实现文件
-   - 头文件声明接口
-   - 实现文件包含具体逻辑
-   - 模块可以独立开发和测试
+   - 每个模块包含头文件和实现文件 (Each module consists of a header file and an implementation file)
+   - 头文件声明接口 (Header files declare interfaces)
+   - 实现文件包含具体逻辑 (Implementation files contain specific logic)
+   - 模块可以独立开发和测试 (Modules can be developed and tested independently)
 
 3. 简化解释 | Simplified Explanation:
-   - 模块就像是积木，每个都有特定功能
-   - 头文件像是积木的接口说明书
-   - 实现文件像是积木的内部构造
-   - 不同的积木可以组合使用
+   - 模块就像是积木，每个都有特定功能 (Modules are like building blocks, each with a specific function)
+   - 头文件像是积木的接口说明书 (Header files are like the interface manual of the building blocks)
+   - 实现文件像是积木的内部构造 (Implementation files are like the internal structure of the building blocks)
+   - 不同的积木可以组合使用 (Different building blocks can be combined for use)
 
 4. 具体示例：
 
